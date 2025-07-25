@@ -15,7 +15,8 @@
       "Bash(npx tsc:*)",
       "Bash(npm run lint)",
       "Bash(timeout 10 npm run dev)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }

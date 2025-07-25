@@ -1,10 +1,17 @@
 import OpenAI from "openai";
 
-// 创建DeepSeek API客户端
-const deepseek = new OpenAI({
-  baseURL: 'https://api.deepseek.com',
-  apiKey: process.env.DEEPSEEK_API_KEY,
-});
+// 延迟初始化DeepSeek API客户端
+function getDeepSeekClient() {
+  const apiKey = process.env.DEEPSEEK_API_KEY;
+  if (!apiKey) {
+    throw new Error('DEEPSEEK_API_KEY environment variable is required');
+  }
+  
+  return new OpenAI({
+    baseURL: 'https://api.deepseek.com',
+    apiKey: apiKey,
+  });
+}
 
 // 八字详批的系统提示词
 const BAZI_SYSTEM_PROMPT = `# 角色设定：现代命理顾问 #
@@ -233,6 +240,7 @@ export async function generateBaziInterpretation(
 
 请严格按照此格式输出，确保每个维度都有实质性内容。`;
 
+    const deepseek = getDeepSeekClient();
     const completion = await deepseek.chat.completions.create({
       messages: [
         { role: "system", content: BAZI_SYSTEM_PROMPT },
@@ -293,6 +301,7 @@ ${input.question ? `- **具体问题：** ${input.question}` : '- **心中默念
 
 请开始专业解读：`;
 
+    const deepseek = getDeepSeekClient();
     const completion = await deepseek.chat.completions.create({
       messages: [
         { role: "system", content: LIUYAO_SYSTEM_PROMPT },
@@ -599,6 +608,7 @@ function extractSectionContent(section: string): string {
  */
 export async function testDeepSeekConnection(): Promise<boolean> {
   try {
+    const deepseek = getDeepSeekClient();
     const completion = await deepseek.chat.completions.create({
       messages: [
         { role: "system", content: "你是一个测试助手，请简单回复收到。" },
