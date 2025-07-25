@@ -182,7 +182,7 @@ export async function POST(request: NextRequest) {
     
     // 测试各个表是否存在
     const tables = ['credits', 'readings', 'payments', 'credit_transactions', 'user_profiles', 'products'];
-    const results = {};
+    const results: Record<string, string> = {};
     
     for (const table of tables) {
       try {

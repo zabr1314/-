@@ -222,7 +222,7 @@ function calculateStrength(dayMaster: string, elements: { wood: number; fire: nu
   // 根据五行属性计算基础分数
   switch (dayElement) {
     case '木':
-      strength += elements.wood * 2 + elements.water * 1 - elements.gold * 1 - elements.fire * 0.5;
+      strength += elements.wood * 2 + elements.water * 1 - elements.metal * 1 - elements.fire * 0.5;
       break;
     case '火':
       strength += elements.fire * 2 + elements.wood * 1 - elements.water * 1 - elements.earth * 0.5;
